@@ -1,24 +1,39 @@
 " lhy configuration
+if has('gui_running')
+    let $PYTHONHOME="/Library/Frameworks/Python.framework/Versions/3.6"
+    set pythonthreedll=/Library/Frameworks/Python.framework/Versions/3.6/lib/libpython3.6m.dylib
+    py3 None
+endif
 set encoding=utf-8
 set fileencoding=utf-8
 set termencoding=utf-8
 set number
+"set number background=dark
+set tabstop=4    
+set softtabstop=4
 set expandtab  " turns <TAB>s into spaces
 " set relativenumber
 set ruler
 set cursorline
 " set guifont=Menlo\ Italic:h20
-set guifont=Source\ Code\ Pro:h20
+set guifont=Source\ Code\ Pro\ Semibold:h20
 "set showcmd             " show command in bottom bar
-set splitbelow
+"set splitbelow
 set splitright
 set background=dark
 if has('gui_running')
     let g:solarized_diffmode="high"
     let g:solarized_visibility="high"
     colorscheme solarized
+    
 else
+    "let g:solarized_diffmode="high"
+    "let g:solarized_visibility="high"
     colorscheme badwolf
+    highlight Comment    ctermfg=01DD00
+    highlight Identifier ctermfg=99AA00
+    syntax on
+    "let g:solarized_termcolors=256
 endif
 
 setlocal textwidth=79
@@ -40,10 +55,7 @@ nnoremap ^ <nop>
 " nnoremap gV `[v`]
 let mapleader=","       " leader is comma
 nnoremap <silent> <leader><space> :nohlsearch<CR>
-set number background=dark
-syntax on
-highlight Comment    ctermfg=119
-highlight Identifier ctermfg=99AA00
+
 
 
 " Vundle config
@@ -95,7 +107,8 @@ map <F2> :NERDTreeToggle<CR>
 "auto run python3
 nnoremap <silent> <F5> :!clear;python3 %<CR>
 "auto run python2.7
-nnoremap <silent> <F6> :!clear;python %<CR>
+nnoremap <silent> <F6> :!clear;python2.7 %<CR>
+nnoremap <silent> <F9> :PymodeLintAuto <CR>
 
 " Python-mode
 " Activate rope
@@ -118,7 +131,9 @@ let g:pymode_options_max_line_length = 79
 let g:pymode_options_colorcolumn = 1
 "let g:pymode_quickfix_minheight = 3
 "let g:pymode_quickfix_maxheight = 6
-"let g:pymode_python = 'python3'
+if has('gui_running')
+    let g:pymode_python = 'python3'
+endif
 
 "Turn off the run code script
 let g:pymode_run = 0
@@ -132,7 +147,8 @@ let g:pymode_lint = 1
 let g:pymode_lint_unmodified = 1
 "Show error message if cursor placed at the error line
 let g:pymode_lint_message = 1
-let g:pymode_lint_checker = ['pylint', 'pyflakes', 'pep8', 'mccabe']
+"let g:pymode_lint_checker = ['pylint', 'pyflakes', 'pep8', 'mccabe']
+let g:pymode_lint_checker = "pyflakes,pep8"
 let g:pymode_lint_sort = ['E', 'C', 'I']
 let g:pymode_lint_cwindow = 1
 " Auto check on save
@@ -146,8 +162,8 @@ let g:pymode_breakpoint = 1
 let g:pymode_breakpoint_bind = '<leader>b'
 
 " Rope
-let g:pymode_rope = 1
-let g:pymode_rope_regenerate_on_write = 1
+let g:pymode_rope = 0
+let g:pymode_rope_regenerate_on_write = 0
 
 "Turn on code completion support in the plugin
 let g:pymode_rope_completion = 1
